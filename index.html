@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ 初階臨床教師訓練 學習風格大公開 🎓</title>
+<style>
+  :root{
+    --bg1:#3a0ca3; --bg2:#7209b7; --bg3:#c026d3;
+    --card-bg: rgba(255,255,255,0.10);
+    --card-border: rgba(255,255,255,0.28);
+    --text: #ffffff;
+    --text-dim: rgba(255,255,255,0.78);
+    --accent: #ffd93d;
+
+    --c-init:#ff4757;
+    --c-reflect:#4ecdc4;
+    --c-act:#ff8c42;
+    --c-balance:#6bcb77;
+    --c-analyze:#5352ed;
+    --c-experience:#ff6b9d;
+    --c-imagine:#a55eea;
+    --c-think:#ffd93d;
+    --c-none:#b2bec3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family: "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,107,157,0.35), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(255,217,61,0.25), transparent 40%),
+      radial-gradient(circle at 80% 85%, rgba(78,205,196,0.30), transparent 45%),
+      linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+    background-attachment: fixed;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* floating emoji background */
+  .float-emoji{
+    position:fixed; top:-10%; font-size:2.2rem; opacity:0.18;
+    animation: floatUp linear infinite;
+    pointer-events:none; z-index:0; user-select:none;
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(0) rotate(0deg); }
+    100%{ transform: translateY(-120vh) rotate(360deg); }
+  }
+
+  .wrap{ position:relative; z-index:1; max-width:1180px; margin:0 auto; padding: 32px 20px 80px; }
+
+  header.hero{ text-align:center; padding: 48px 16px 28px; }
+  .badge{
+    display:inline-block; padding:6px 18px; border-radius:999px;
+    background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.35);
+    font-size:0.85rem; letter-spacing:2px; margin-bottom:18px; backdrop-filter: blur(6px);
+  }
+  h1.title{
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    margin: 0 0 12px;
+    font-weight: 900;
+    background: linear-gradient(90deg,#ffd93d,#ff6b9d,#4ecdc4,#a55eea);
+    background-size: 300% auto;
+    -webkit-background-clip: text; background-clip:text; color:transparent;
+    animation: shine 6s linear infinite;
+    line-height:1.25;
+  }
+  @keyframes shine{ to{ background-position: 300% center; } }
+  .subtitle{ color: var(--text-dim); font-size:1.05rem; max-width:640px; margin: 0 auto; }
+
+  section{ margin-top: 46px; }
+  .section-title{
+    display:flex; align-items:center; gap:10px;
+    font-size:1.5rem; font-weight:800; margin-bottom:20px;
+  }
+  .section-title .num{
+    background:var(--accent); color:#3a0ca3; width:34px;height:34px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center; font-size:0.95rem; flex-shrink:0;
+  }
+
+  /* stat cards */
+  .stats-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:18px; }
+  .stat-card{
+    background:var(--card-bg); border:1px solid var(--card-border); border-radius:20px;
+    padding:22px 18px; text-align:center; backdrop-filter: blur(10px);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .stat-card:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+  .stat-card .emoji{ font-size:2.2rem; display:block; margin-bottom:8px; }
+  .stat-card .value{ font-size:2rem; font-weight:900; }
+  .stat-card .label{ color:var(--text-dim); font-size:0.9rem; margin-top:4px; }
+
+  /* glass card generic */
+  .glass{
+    background:var(--card-bg); border:1px solid var(--card-border); border-radius:24px;
+    padding:26px; backdrop-filter: blur(10px);
+  }
+
+  .chart-grid{ display:grid; grid-template-columns: 1.2fr 1fr; gap:22px; }
+  @media (max-width: 860px){ .chart-grid{ grid-template-columns:1fr; } }
+  .chart-title{ font-weight:800; font-size:1.05rem; margin-bottom:18px; text-align:center; }
+
+  /* bar chart (css) */
+  .bar-chart{ display:flex; flex-direction:column; gap:14px; }
+  .bar-row{ display:grid; grid-template-columns: 108px 1fr 54px; align-items:center; gap:10px; }
+  .bar-row .bar-label{ font-size:0.88rem; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .bar-track{ background:rgba(255,255,255,0.14); border-radius:999px; height:16px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:999px; width:0%; transition: width 1s cubic-bezier(.22,1,.36,1); }
+  .bar-row .bar-value{ font-size:0.85rem; font-weight:800; text-align:right; }
+
+  /* donut chart (css conic-gradient) */
+  .donut-wrap{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .donut{
+    width:220px; height:220px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .donut-center{
+    width:130px; height:130px; border-radius:50%;
+    background: linear-gradient(145deg, rgba(58,12,163,0.95), rgba(114,9,183,0.95));
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .donut-center .big{ font-size:1.8rem; font-weight:900; }
+  .donut-center .small{ font-size:0.75rem; color:var(--text-dim); }
+  .donut-legend{ display:flex; flex-wrap:wrap; gap:10px 16px; justify-content:center; }
+  .legend-item{ display:flex; align-items:center; gap:6px; font-size:0.82rem; }
+  .legend-dot{ width:12px; height:12px; border-radius:4px; display:inline-block; }
+
+  /* level bar chart (vertical css) */
+  .level-chart{ display:flex; align-items:flex-end; justify-content:center; gap:60px; height:220px; padding-top:20px; }
+  .level-col{ display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+  .level-bar{ width:64px; border-radius:14px 14px 6px 6px; transition:height 1s cubic-bezier(.22,1,.36,1); height:0; position:relative; box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+  .level-bar .lv-count{ position:absolute; top:-28px; left:0; right:0; text-align:center; font-weight:900; font-size:1.1rem; }
+  .level-col .lv-name{ margin-top:10px; font-weight:800; }
+  .level-col .lv-pct{ font-size:0.78rem; color:var(--text-dim); }
+
+  /* style legend cards */
+  .style-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; margin-top:22px; }
+  .style-card{
+    border-radius:18px; padding:18px; background:var(--card-bg); border:1px solid var(--card-border);
+    position:relative; overflow:hidden; transition: transform .2s ease;
+  }
+  .style-card:hover{ transform: translateY(-4px); }
+  .style-card::before{
+    content:""; position:absolute; top:0; left:0; width:6px; height:100%;
+    background: var(--sc);
+  }
+  .style-card .top{ display:flex; justify-content:space-between; align-items:center; }
+  .style-card .icon{ font-size:1.8rem; }
+  .style-card .count{
+    font-weight:900; font-size:1.3rem; background:var(--sc); color:#1a0b2e;
+    padding:3px 12px; border-radius:999px;
+  }
+  .style-card .name-zh{ font-weight:800; font-size:1.1rem; margin-top:10px; }
+  .style-card .name-en{ color:var(--text-dim); font-size:0.82rem; }
+  .style-card .desc{ margin-top:8px; font-size:0.86rem; color:var(--text-dim); line-height:1.5; }
+  .style-card .pct-bar{ height:8px; border-radius:999px; background:rgba(255,255,255,0.15); margin-top:12px; overflow:hidden; }
+  .style-card .pct-fill{ height:100%; border-radius:999px; background:var(--sc); }
+
+  /* filters */
+  .filter-bar{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:20px; }
+  .chip{
+    cursor:pointer; padding:8px 16px; border-radius:999px; font-size:0.85rem; font-weight:700;
+    background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.3); color:var(--text);
+    transition: all .2s ease; user-select:none;
+  }
+  .chip:hover{ background:rgba(255,255,255,0.24); }
+  .chip.active{ background: var(--accent); color:#3a0ca3; border-color:var(--accent); }
+
+  /* unit cards */
+  .unit-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+  .unit-card{
+    background:var(--card-bg); border:1px solid var(--card-border); border-radius:18px; padding:16px;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  .unit-card:hover{ transform: translateY(-4px); }
+  .unit-card h3{ margin:0 0 6px; font-size:1.05rem; display:flex; align-items:center; gap:6px; }
+  .unit-card .u-meta{ font-size:0.78rem; color:var(--text-dim); margin-bottom:10px; }
+  .unit-card .tag-row{ display:flex; flex-wrap:wrap; gap:6px; }
+  .mini-tag{
+    font-size:0.72rem; padding:3px 9px; border-radius:999px; font-weight:700;
+    background: rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.25);
+  }
+  .unit-card .dominant{
+    margin-top:10px; font-size:0.8rem; font-weight:700; display:inline-block;
+    padding:4px 10px; border-radius:10px;
+  }
+  .hidden{ display:none !important; }
+
+  footer{ text-align:center; margin-top:60px; color:var(--text-dim); font-size:0.85rem; padding-bottom: 10px;}
+  footer .heart{ animation: pulse 1.4s ease-in-out infinite; display:inline-block; }
+  @keyframes pulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.3);} }
+
+  .scroll-note{ text-align:center; color:var(--text-dim); font-size:0.8rem; margin-top:6px; }
+</style>
+</head>
+<body>
+
+<div id="emoji-bg"></div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="badge">🏥 初階臨床教師訓練計畫 · CLINICAL PRECEPTOR PROGRAM</div>
+    <h1 class="title">🎓 學習風格大公開 ✨</h1>
+    <p class="subtitle">從 27 個單位、59 位初階臨床教師的學習風格問卷結果，一起用活潑的方式看看大家的教學 & 學習性格分佈吧！🌈💜🚀</p>
+  </header>
+
+  <!-- OVERVIEW -->
+  <section>
+    <div class="stats-grid" id="stat-cards"></div>
+  </section>
+
+  <!-- CHARTS -->
+  <section>
+    <div class="section-title"><span class="num">1</span> 學習風格總覽 🎨</div>
+    <div class="chart-grid">
+      <div class="glass">
+        <div class="chart-title">📊 各學習風格人數分佈</div>
+        <div class="bar-chart" id="barChart"></div>
+      </div>
+      <div class="glass">
+        <div class="chart-title">🍩 學習風格佔比</div>
+        <div class="donut-wrap" id="donutChart"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STYLE CARDS -->
+  <section>
+    <div class="section-title"><span class="num">2</span> 八大學習風格小檔案 🧬</div>
+    <div class="style-grid" id="style-cards"></div>
+  </section>
+
+  <!-- LEVEL -->
+  <section>
+    <div class="section-title"><span class="num">3</span> N 層級分佈 🏷️</div>
+    <div class="glass">
+      <div class="chart-title">📈 N2 / N3 / N4 層級人數</div>
+      <div class="level-chart" id="levelChart"></div>
+    </div>
+  </section>
+
+  <!-- UNITS -->
+  <section>
+    <div class="section-title"><span class="num">4</span> 各單位教師風格地圖 🗺️</div>
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="unit-grid" id="unit-grid"></div>
+  </section>
+
+  <footer>
+    made with <span class="heart">💜</span> for 初階臨床教師訓練 · 資料來源：初階臨床教師名單-製作網頁用.xlsx
+  </footer>
+
+</div>
+
+<script>
+const DATA = {"records": [{"unit": "10B", "level": "N2", "style": "尚未填寫"}, {"unit": "12A", "level": "N2", "style": "經驗型 (Experiencing)"}, {"unit": "12A", "level": "N2", "style": "思考型 (Thinking)"}, {"unit": "3BI-1", "level": "N2", "style": "行動型 (Acting)"}, {"unit": "3BI-1", "level": "N4", "style": "行動型 (Acting)"}, {"unit": "3BI-1", "level": "N2", "style": "思考型 (Thinking)"}, {"unit": "3BI-2", "level": "N2", "style": "均衡型 (Balancing)"}, {"unit": "3BI-2", "level": "N3", "style": "啟動型 (Initiating)"}, {"unit": "3CI", "level": "N2", "style": "反思型 (Reflecting)"}, {"unit": "4ADR", "level": "N2", "style": "均衡型 (Balancing)"}, {"unit": "4ADR", "level": "N2", "style": "啟動型 (Initiating)"}, {"unit": "4ADR", "level": "N3", "style": "分析型 (Analyzing)"}, {"unit": "4BI", "level": "N3", "style": "行動型 (Acting)"}, {"unit": "5A", "level": "N3", "style": "反思型 (Reflecting)"}, {"unit": "5A", "level": "N3", "style": "啟動型 (Initiating)"}, {"unit": "5B", "level": "N2", "style": "分析型 (Analyzing)"}, {"unit": "5B", "level": "N3", "style": "反思型 (Reflecting)"}, {"unit": "5CI", "level": "N2", "style": "行動型 (Acting)"}, {"unit": "6BI", "level": "N2", "style": "均衡型 (Balancing)"}, {"unit": "6BI", "level": "N2", "style": "行動型 (Acting)"}, {"unit": "6BI", "level": "N2", "style": "想像型 (Imagining)"}, {"unit": "7A", "level": "N3", "style": "分析型 (Analyzing)"}, {"unit": "7A", "level": "N2", "style": "啟動型 (Initiating)"}, {"unit": "7A", "level": "N2", "style": "分析型 (Analyzing)"}, {"unit": "7A", "level": "N3", "style": "啟動型 (Initiating)"}, {"unit": "7B", "level": "N3", "style": "啟動型 (Initiating)"}, {"unit": "7B", "level": "N3", "style": "經驗型 (Experiencing)"}, {"unit": "8A", "level": "N3", "style": "想像型 (Imagining)"}, {"unit": "8A", "level": "N3", "style": "分析型 (Analyzing)"}, {"unit": "8C", "level": "N3", "style": "反思型 (Reflecting)"}, {"unit": "8C", "level": "N4", "style": "經驗型 (Experiencing)"}, {"unit": "8C", "level": "N4", "style": "反思型 (Reflecting)"}, {"unit": "8C", "level": "N3", "style": "啟動型 (Initiating)"}, {"unit": "9B", "level": "N3", "style": "想像型 (Imagining)"}, {"unit": "9B", "level": "N2", "style": "反思型 (Reflecting)"}, {"unit": "Burn", "level": "N3", "style": "啟動型 (Initiating)"}, {"unit": "HR", "level": "N3", "style": "反思型 (Reflecting)"}, {"unit": "HR", "level": "N3", "style": "分析型 (Analyzing)"}, {"unit": "OPD", "level": "N2", "style": "均衡型 (Balancing)"}, {"unit": "OPD", "level": "N3", "style": "均衡型 (Balancing)"}, {"unit": "OR", "level": "N2", "style": "啟動型 (Initiating)"}, {"unit": "PSY", "level": "N3", "style": "想像型 (Imagining)"}, {"unit": "RCC", "level": "N2", "style": "行動型 (Acting)"}, {"unit": "佳里奇美", "level": "N2", "style": "反思型 (Reflecting)"}, {"unit": "佳里奇美", "level": "N3", "style": "分析型 (Analyzing)"}, {"unit": "佳里奇美", "level": "N2", "style": "經驗型 (Experiencing)"}, {"unit": "佳里奇美", "level": "N2", "style": "均衡型 (Balancing)"}, {"unit": "佳里奇美", "level": "N3", "style": "經驗型 (Experiencing)"}, {"unit": "佳里奇美", "level": "N2", "style": "均衡型 (Balancing)"}, {"unit": "佳里奇美", "level": "N2", "style": "行動型 (Acting)"}, {"unit": "居護所", "level": "N3", "style": "啟動型 (Initiating)"}, {"unit": "社區整合", "level": "N3", "style": "思考型 (Thinking)"}, {"unit": "社區整合", "level": "N4", "style": "分析型 (Analyzing)"}, {"unit": "社區整合", "level": "N3", "style": "行動型 (Acting)"}, {"unit": "社區整合", "level": "N2", "style": "反思型 (Reflecting)"}, {"unit": "若瑟醫院", "level": "N2", "style": "啟動型 (Initiating)"}, {"unit": "寶建醫院", "level": "N3", "style": "反思型 (Reflecting)"}, {"unit": "寶建醫院", "level": "N2", "style": "經驗型 (Experiencing)"}, {"unit": "寶建醫院", "level": "N4", "style": "均衡型 (Balancing)"}], "units": [{"unit": "佳里奇美", "total": 7, "levels": {"N2": 5, "N3": 2}, "styles": {"反思型 (Reflecting)": 1, "分析型 (Analyzing)": 1, "經驗型 (Experiencing)": 2, "均衡型 (Balancing)": 2, "行動型 (Acting)": 1}, "dominant": "經驗型 (Experiencing)"}, {"unit": "7A", "total": 4, "levels": {"N3": 2, "N2": 2}, "styles": {"分析型 (Analyzing)": 2, "啟動型 (Initiating)": 2}, "dominant": "分析型 (Analyzing)"}, {"unit": "8C", "total": 4, "levels": {"N3": 2, "N4": 2}, "styles": {"反思型 (Reflecting)": 2, "經驗型 (Experiencing)": 1, "啟動型 (Initiating)": 1}, "dominant": "反思型 (Reflecting)"}, {"unit": "社區整合", "total": 4, "levels": {"N3": 2, "N4": 1, "N2": 1}, "styles": {"思考型 (Thinking)": 1, "分析型 (Analyzing)": 1, "行動型 (Acting)": 1, "反思型 (Reflecting)": 1}, "dominant": "思考型 (Thinking)"}, {"unit": "3BI-1", "total": 3, "levels": {"N2": 2, "N4": 1}, "styles": {"行動型 (Acting)": 2, "思考型 (Thinking)": 1}, "dominant": "行動型 (Acting)"}, {"unit": "4ADR", "total": 3, "levels": {"N2": 2, "N3": 1}, "styles": {"均衡型 (Balancing)": 1, "啟動型 (Initiating)": 1, "分析型 (Analyzing)": 1}, "dominant": "均衡型 (Balancing)"}, {"unit": "6BI", "total": 3, "levels": {"N2": 3}, "styles": {"均衡型 (Balancing)": 1, "行動型 (Acting)": 1, "想像型 (Imagining)": 1}, "dominant": "均衡型 (Balancing)"}, {"unit": "寶建醫院", "total": 3, "levels": {"N3": 1, "N2": 1, "N4": 1}, "styles": {"反思型 (Reflecting)": 1, "經驗型 (Experiencing)": 1, "均衡型 (Balancing)": 1}, "dominant": "反思型 (Reflecting)"}, {"unit": "12A", "total": 2, "levels": {"N2": 2}, "styles": {"經驗型 (Experiencing)": 1, "思考型 (Thinking)": 1}, "dominant": "經驗型 (Experiencing)"}, {"unit": "3BI-2", "total": 2, "levels": {"N2": 1, "N3": 1}, "styles": {"均衡型 (Balancing)": 1, "啟動型 (Initiating)": 1}, "dominant": "均衡型 (Balancing)"}, {"unit": "5A", "total": 2, "levels": {"N3": 2}, "styles": {"反思型 (Reflecting)": 1, "啟動型 (Initiating)": 1}, "dominant": "反思型 (Reflecting)"}, {"unit": "5B", "total": 2, "levels": {"N2": 1, "N3": 1}, "styles": {"分析型 (Analyzing)": 1, "反思型 (Reflecting)": 1}, "dominant": "分析型 (Analyzing)"}, {"unit": "7B", "total": 2, "levels": {"N3": 2}, "styles": {"啟動型 (Initiating)": 1, "經驗型 (Experiencing)": 1}, "dominant": "啟動型 (Initiating)"}, {"unit": "8A", "total": 2, "levels": {"N3": 2}, "styles": {"想像型 (Imagining)": 1, "分析型 (Analyzing)": 1}, "dominant": "想像型 (Imagining)"}, {"unit": "9B", "total": 2, "levels": {"N3": 1, "N2": 1}, "styles": {"想像型 (Imagining)": 1, "反思型 (Reflecting)": 1}, "dominant": "想像型 (Imagining)"}, {"unit": "HR", "total": 2, "levels": {"N3": 2}, "styles": {"反思型 (Reflecting)": 1, "分析型 (Analyzing)": 1}, "dominant": "反思型 (Reflecting)"}, {"unit": "OPD", "total": 2, "levels": {"N2": 1, "N3": 1}, "styles": {"均衡型 (Balancing)": 2}, "dominant": "均衡型 (Balancing)"}, {"unit": "10B", "total": 1, "levels": {"N2": 1}, "styles": {"尚未填寫": 1}, "dominant": "尚未填寫"}, {"unit": "3CI", "total": 1, "levels": {"N2": 1}, "styles": {"反思型 (Reflecting)": 1}, "dominant": "反思型 (Reflecting)"}, {"unit": "4BI", "total": 1, "levels": {"N3": 1}, "styles": {"行動型 (Acting)": 1}, "dominant": "行動型 (Acting)"}, {"unit": "5CI", "total": 1, "levels": {"N2": 1}, "styles": {"行動型 (Acting)": 1}, "dominant": "行動型 (Acting)"}, {"unit": "Burn", "total": 1, "levels": {"N3": 1}, "styles": {"啟動型 (Initiating)": 1}, "dominant": "啟動型 (Initiating)"}, {"unit": "OR", "total": 1, "levels": {"N2": 1}, "styles": {"啟動型 (Initiating)": 1}, "dominant": "啟動型 (Initiating)"}, {"unit": "PSY", "total": 1, "levels": {"N3": 1}, "styles": {"想像型 (Imagining)": 1}, "dominant": "想像型 (Imagining)"}, {"unit": "RCC", "total": 1, "levels": {"N2": 1}, "styles": {"行動型 (Acting)": 1}, "dominant": "行動型 (Acting)"}, {"unit": "居護所", "total": 1, "levels": {"N3": 1}, "styles": {"啟動型 (Initiating)": 1}, "dominant": "啟動型 (Initiating)"}, {"unit": "若瑟醫院", "total": 1, "levels": {"N2": 1}, "styles": {"啟動型 (Initiating)": 1}, "dominant": "啟動型 (Initiating)"}], "styleCounts": {"啟動型 (Initiating)": 11, "反思型 (Reflecting)": 10, "行動型 (Acting)": 8, "均衡型 (Balancing)": 8, "分析型 (Analyzing)": 8, "經驗型 (Experiencing)": 6, "想像型 (Imagining)": 4, "思考型 (Thinking)": 3, "尚未填寫": 1}, "levelCounts": {"N2": 28, "N3": 26, "N4": 5}, "total": 59, "unitCount": 27};
+
+const STYLE_META = {
+  "啟動型 (Initiating)":   { zh:"啟動型", en:"Initiating",   emoji:"🔥", color:"#ff4757", desc:"喜歡主動出擊、率先嘗試新方法，是行動的第一棒！" },
+  "反思型 (Reflecting)":   { zh:"反思型", en:"Reflecting",   emoji:"🪞", color:"#4ecdc4", desc:"擅長觀察與省思，喜歡從經驗中沉澱、歸納出道理。" },
+  "行動型 (Acting)":       { zh:"行動型", en:"Acting",       emoji:"🚀", color:"#ff8c42", desc:"重視實際操作，喜歡動手做、在行動中學習與成長。" },
+  "均衡型 (Balancing)":    { zh:"均衡型", en:"Balancing",    emoji:"⚖️", color:"#6bcb77", desc:"兼容並蓄，能靈活切換不同學習方式，適應力超強！" },
+  "分析型 (Analyzing)":    { zh:"分析型", en:"Analyzing",    emoji:"🔍", color:"#5352ed", desc:"喜歡拆解問題、系統性思考，邏輯清晰、追根究底。" },
+  "經驗型 (Experiencing)": { zh:"經驗型", en:"Experiencing", emoji:"🌱", color:"#ff6b9d", desc:"從實際經驗與情境中學習，重視親身體驗的過程。" },
+  "想像型 (Imagining)":    { zh:"想像型", en:"Imagining",    emoji:"🎨", color:"#a55eea", desc:"富有創意與想像力，喜歡從多元角度連結新觀點。" },
+  "思考型 (Thinking)":     { zh:"思考型", en:"Thinking",     emoji:"🧠", color:"#ffd93d", desc:"理性且深思熟慮，喜歡透過邏輯推演理解事物。" },
+  "尚未填寫":              { zh:"尚未填寫", en:"Not filled yet", emoji:"❓", color:"#b2bec3", desc:"問卷尚未完成，期待這位教師補上屬於自己的風格！" }
+};
+
+/* ---------- floating emoji background ---------- */
+const EMOJIS = ["🎓","✨","💜","🌈","🚀","🧠","🔥","🎨","⚖️","🪞","🌱","💡","📚","🩺"];
+const bgWrap = document.getElementById('emoji-bg');
+for(let i=0;i<22;i++){
+  const el = document.createElement('span');
+  el.className = 'float-emoji';
+  el.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+  el.style.left = (Math.random()*100)+'vw';
+  el.style.animationDuration = (14 + Math.random()*16)+'s';
+  el.style.animationDelay = (Math.random()*-20)+'s';
+  el.style.fontSize = (1.4 + Math.random()*1.8)+'rem';
+  bgWrap.appendChild(el);
+}
+
+/* ---------- stat cards ---------- */
+const sortedStyles = Object.entries(DATA.styleCounts).sort((a,b)=>b[1]-a[1]);
+const topStyle = sortedStyles[0];
+const statCards = [
+  { emoji:"🧑‍⚕️", value: DATA.total, label:"位初階臨床教師" },
+  { emoji:"🏥", value: DATA.unitCount, label:"個參與單位" },
+  { emoji: STYLE_META[topStyle[0]].emoji, value: STYLE_META[topStyle[0]].zh, label:`最大宗風格・${topStyle[1]} 人` },
+  { emoji:"🌟", value: Object.keys(DATA.styleCounts).length - 1, label:"種學習風格類型" },
+];
+document.getElementById('stat-cards').innerHTML = statCards.map(s=>`
+  <div class="stat-card">
+    <span class="emoji">${s.emoji}</span>
+    <div class="value">${s.value}</div>
+    <div class="label">${s.label}</div>
+  </div>
+`).join('');
+
+/* ---------- style cards ---------- */
+document.getElementById('style-cards').innerHTML = sortedStyles.map(([key,count])=>{
+  const m = STYLE_META[key];
+  const pct = ((count/DATA.total)*100).toFixed(1);
+  return `
+    <div class="style-card" style="--sc:${m.color}">
+      <div class="top">
+        <span class="icon">${m.emoji}</span>
+        <span class="count">${count} 人</span>
+      </div>
+      <div class="name-zh">${m.zh}學習者</div>
+      <div class="name-en">${m.en}</div>
+      <div class="desc">${m.desc}</div>
+      <div class="pct-bar"><div class="pct-fill" style="width:${pct}%"></div></div>
+      <div class="name-en" style="margin-top:6px;">佔比 ${pct}%</div>
+    </div>
+  `;
+}).join('');
+
+/* ---------- bar chart (css) ---------- */
+const maxCount = Math.max(...sortedStyles.map(([,v])=>v));
+document.getElementById('barChart').innerHTML = sortedStyles.map(([k,v])=>{
+  const m = STYLE_META[k];
+  const pct = ((v/DATA.total)*100).toFixed(1);
+  return `
+    <div class="bar-row">
+      <div class="bar-label">${m.emoji} ${m.zh}</div>
+      <div class="bar-track"><div class="bar-fill" data-width="${(v/maxCount*100)}" style="background:${m.color};"></div></div>
+      <div class="bar-value">${v} 人</div>
+    </div>
+  `;
+}).join('');
+requestAnimationFrame(()=>{
+  document.querySelectorAll('#barChart .bar-fill').forEach(el=>{
+    el.style.width = el.dataset.width + '%';
+  });
+});
+
+/* ---------- donut chart (css conic-gradient) ---------- */
+(function(){
+  let acc = 0;
+  const stops = sortedStyles.map(([k,v])=>{
+    const m = STYLE_META[k];
+    const start = acc/DATA.total*360;
+    acc += v;
+    const end = acc/DATA.total*360;
+    return `${m.color} ${start}deg ${end}deg`;
+  }).join(', ');
+  const legend = sortedStyles.map(([k,v])=>{
+    const m = STYLE_META[k];
+    const pct = ((v/DATA.total)*100).toFixed(1);
+    return `<span class="legend-item"><span class="legend-dot" style="background:${m.color}"></span>${m.emoji} ${m.zh} ${pct}%</span>`;
+  }).join('');
+  document.getElementById('donutChart').innerHTML = `
+    <div class="donut" style="background: conic-gradient(${stops});">
+      <div class="donut-center">
+        <div class="big">${DATA.total}</div>
+        <div class="small">位教師</div>
+      </div>
+    </div>
+    <div class="donut-legend">${legend}</div>
+  `;
+})();
+
+/* ---------- level chart (css) ---------- */
+(function(){
+  const levelEntries = Object.entries(DATA.levelCounts);
+  const levelColors = { N2:"#4ecdc4", N3:"#ff8c42", N4:"#a55eea" };
+  const maxLv = Math.max(...levelEntries.map(([,v])=>v));
+  document.getElementById('levelChart').innerHTML = levelEntries.map(([lv,v])=>{
+    const pct = ((v/DATA.total)*100).toFixed(1);
+    return `
+      <div class="level-col">
+        <div class="level-bar" data-height="${(v/maxLv*100)}" style="background:${levelColors[lv]};">
+          <div class="lv-count">${v}</div>
+        </div>
+        <div class="lv-name">🏷️ ${lv}</div>
+        <div class="lv-pct">${pct}%</div>
+      </div>
+    `;
+  }).join('');
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#levelChart .level-bar').forEach(el=>{
+      el.style.height = el.dataset.height + '%';
+    });
+  });
+})();
+
+/* ---------- filter chips ---------- */
+let activeFilter = 'all';
+const filterBar = document.getElementById('filter-bar');
+const filters = [{key:'all', label:'🌟 全部單位'}].concat(
+  sortedStyles.map(([k])=>({ key:k, label: STYLE_META[k].emoji+' '+STYLE_META[k].zh }))
+);
+filterBar.innerHTML = filters.map(f=>`<div class="chip ${f.key==='all'?'active':''}" data-key="${f.key}">${f.label}</div>`).join('');
+filterBar.addEventListener('click', (e)=>{
+  const chip = e.target.closest('.chip');
+  if(!chip) return;
+  activeFilter = chip.dataset.key;
+  [...filterBar.children].forEach(c=>c.classList.toggle('active', c===chip));
+  renderUnits();
+});
+
+/* ---------- unit cards ---------- */
+function renderUnits(){
+  const grid = document.getElementById('unit-grid');
+  grid.innerHTML = DATA.units.map(u=>{
+    const matches = activeFilter==='all' || Object.keys(u.styles).includes(activeFilter);
+    const dom = STYLE_META[u.dominant];
+    const levelTags = Object.entries(u.levels).map(([lv,c])=>`<span class="mini-tag">${lv}×${c}</span>`).join('');
+    return `
+      <div class="unit-card ${matches?'':'hidden'}">
+        <h3>🏥 ${u.unit}</h3>
+        <div class="u-meta">共 ${u.total} 人</div>
+        <div class="tag-row">${levelTags}</div>
+        <div class="dominant" style="background:${dom.color}55; color:#ffffff; border:1px solid ${dom.color}cc;">
+          ${dom.emoji} 主要風格：${dom.zh}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+renderUnits();
+</script>
+</body>
+</html>
