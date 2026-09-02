@@ -185,9 +185,10 @@
     font-size:0.72rem; padding:3px 9px; border-radius:999px; font-weight:700;
     background: rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.25);
   }
-  .unit-card .dominant{
-    margin-top:10px; font-size:0.8rem; font-weight:700; display:inline-block;
-    padding:4px 10px; border-radius:10px;
+  .unit-card .style-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .unit-card .style-tag{
+    font-size:0.76rem; font-weight:700; display:inline-flex; align-items:center; gap:4px;
+    padding:4px 10px; border-radius:10px; white-space:nowrap;
   }
   .hidden{ display:none !important; }
 
@@ -412,16 +413,19 @@ function renderUnits(){
   const grid = document.getElementById('unit-grid');
   grid.innerHTML = DATA.units.map(u=>{
     const matches = activeFilter==='all' || Object.keys(u.styles).includes(activeFilter);
-    const dom = STYLE_META[u.dominant];
     const levelTags = Object.entries(u.levels).map(([lv,c])=>`<span class="mini-tag">${lv}×${c}</span>`).join('');
+    const styleTags = Object.entries(u.styles)
+      .sort((a,b)=>b[1]-a[1])
+      .map(([key,count])=>{
+        const m = STYLE_META[key];
+        return `<span class="style-tag" style="background:${m.color}55; color:#ffffff; border:1px solid ${m.color}cc;">${m.emoji} ${m.zh}${count>1?` ×${count}`:''}</span>`;
+      }).join('');
     return `
       <div class="unit-card ${matches?'':'hidden'}">
         <h3>🏥 ${u.unit}</h3>
         <div class="u-meta">共 ${u.total} 人</div>
         <div class="tag-row">${levelTags}</div>
-        <div class="dominant" style="background:${dom.color}55; color:#ffffff; border:1px solid ${dom.color}cc;">
-          ${dom.emoji} 主要風格：${dom.zh}
-        </div>
+        <div class="style-tags">${styleTags}</div>
       </div>
     `;
   }).join('');
